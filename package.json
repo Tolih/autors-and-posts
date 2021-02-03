@@ -1,0 +1,32 @@
+{
+  "name": "autors-and-posts",
+  "version": "1.0.0",
+  "description": "Authors and posts",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index",
+    "client": "node client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tolih/autors-and-posts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tolih/autors-and-posts/issues"
+  },
+  "homepage": "https://github.com/Tolih/autors-and-posts#readme",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.0",
+    "@grpc/grpc-js": "^1.1.0",
+    "mongoose": "5.10.15",
+    "dotenv": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.5.31",
+    "@types/node": "^10.14.15"
+  }
+}

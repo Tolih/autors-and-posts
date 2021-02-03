@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package author;
+
+service createAuthor {
+  rpc create (MCreateAuthor) returns (MCreateAuthorReply) {}
+}
+
+message MCreateAuthor {
+  string authorName = 1;
+}
+
+message MCreateAuthorReply {
+  bool success = 1;
+}
