@@ -2,14 +2,37 @@ syntax = "proto3";
 
 package author;
 
-service createAuthor {
-  rpc create (MCreateAuthor) returns (MCreateAuthorReply) {}
+service authorService {
+  rpc create (createAuthorRequest) returns (onlyIdReply) {}
+  rpc update (updateAuthorRequest) returns (onlyIdReply) {}
+  rpc delete (onlyIdRequest) returns (onlyIdReply) {}
+  rpc getAll (nothing) returns (getAllAuthorsReply) {}
+  rpc getById (onlyIdRequest) returns (getByIdAuthorReply) {}
 }
 
-message MCreateAuthor {
+message createAuthorRequest {
   string authorName = 1;
 }
+message updateAuthorRequest {
+  string id = 1;
+  string authorName = 2;
+}
+message onlyIdRequest {
+  string id = 1;
+}
+message nothing {}
 
-message MCreateAuthorReply {
+message onlyIdReply {
   bool success = 1;
+  string id = 2;
+}
+message getAllAuthorsReply {
+  bool success = 1;
+  string count = 2;
+//  repeated string items = 3;
+}
+message getByIdAuthorReply {
+  bool success = 1;
+  string id = 2;
+  string authorName = 3;
 }
