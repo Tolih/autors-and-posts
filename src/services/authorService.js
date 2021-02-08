@@ -8,28 +8,37 @@ const authorModel = mongoose.model('author', AuthorSchema);
 const authorService = {
     create: async (call, callback) => {
         let result = await authorModel.create({name: call.request.authorName});
-        callback(null, {success: !!result, id: result._id});
+        callback(null, {success: !!result, id: result._id, authorName: result.name});
     },
     update: async (call, callback) => {
-        console.log(call.request.id);
-        console.log(mongoose.Types.ObjectId(call.request.id));
-        let result = authorModel.updateOne({_id: mongoose.Types.ObjectId(call.request.id)}, {name: call.request.authorName});
+        let result = await authorModel.updateOne(
+            {_id: mongoose.Types.ObjectId(call.request.id)},
+            {$set: {name: call.request.authorName}}
+        );
 
-        callback(null, {success: !!result, id: result._id});
+        callback(null, {success: !!result, id: call.request.id});
     },
     delete: async (call, callback) => {
-        let result = authorModel.deleteOne({_id: mongoose.Types.ObjectId(call.request.id)});
+        let result = await authorModel.deleteOne({_id: mongoose.Types.ObjectId(call.request.id)});
 
         callback(null, {success: !!result, id: result._id});
     },
     getAll: async (call, callback) => {
         let count = await authorModel.countDocuments();
-        let result = await authorModel.find();
+        let result = await authorModel.aggregate([
+            {
+                $project: {
+                    _id: 0,
+                    id: '$_id',
+                    authorName: '$name'
+                }
+            }
+        ]);
 
-        callback(null, {success: !!result, count: count/*, items: result*/});
+        callback(null, {success: !!result, count: count, items: result});
     },
     getById: async (call, callback) => {
-        let result = await authorModel.find({_id: mongoose.Types.ObjectId(call.request.id)});
+        let result = await authorModel.findById(mongoose.Types.ObjectId(call.request.id));
 
         callback(null, {success: !!result, id: result._id, authorName: result.name});
     }

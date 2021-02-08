@@ -3,11 +3,11 @@ syntax = "proto3";
 package author;
 
 service authorService {
-  rpc create (createAuthorRequest) returns (onlyIdReply) {}
+  rpc create (createAuthorRequest) returns (fullDataAuthorReply) {}
   rpc update (updateAuthorRequest) returns (onlyIdReply) {}
   rpc delete (onlyIdRequest) returns (onlyIdReply) {}
   rpc getAll (nothing) returns (getAllAuthorsReply) {}
-  rpc getById (onlyIdRequest) returns (getByIdAuthorReply) {}
+  rpc getById (onlyIdRequest) returns (fullDataAuthorReply) {}
 }
 
 message createAuthorRequest {
@@ -28,10 +28,10 @@ message onlyIdReply {
 }
 message getAllAuthorsReply {
   bool success = 1;
-  string count = 2;
-//  repeated string items = 3;
+  int32 count = 2;
+  repeated fullDataAuthorReply items = 3;
 }
-message getByIdAuthorReply {
+message fullDataAuthorReply {
   bool success = 1;
   string id = 2;
   string authorName = 3;
